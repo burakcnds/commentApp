@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+<title>Kayıt Ol</title>
+{% endblock title %}
+
+
+    {% block content %}
+   
+     
+
+     <h1> Login </h1>
+     
+     <form method="POST" novalidate >
+        {% csrf_token %}  
+        {% for field in form %}
+        <label for=""> {{field.label}} </label>
+        {{field}}
+        {% endfor %}
+        <input class="mt-2" type="submit" value="Kaydet">
+      
+    </form>
+    
+
+
+
+
+
+    
+      
+      
+      {% endblock content %}
+
+
+    
+
+

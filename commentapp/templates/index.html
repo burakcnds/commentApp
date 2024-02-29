@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% load static %} {% block title %}
+<title>Comment App</title>
+{% endblock title %} {% block content %}
+<h1 class="text-center">Comment App</h1>
+<div class="container">
+  <form method="POST" novalidate>
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-4">
+        <label for=""> {{form.full_name.label}} </label>
+        {{form.full_name}}
+      </div>
+
+      <div class="col-4">
+        <label for=""> {{form.email.label}} </label>
+        {{form.email}}
+      </div>
+
+      <div class="col-12">{{form.text}} {{form.media}}</div>
+
+      <div class="col-3 mt-2">
+        <input type="submit" value="Gönder" class="btn btn-outline-dark w-50" />
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- {{form}} 
+{{form.media}} -->
+<div class="container">
+  <div class="row mt-2">
+    {% for y in yorum %}
+    <div class="col-6">
+      <div class="card m-1">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h4 class="card-title">{{y.full_name}}</h4>
+            <p class="card-text"><strong> Email :</strong> {{y.email}}</p>
+          </div>
+          <p class="card-text">{{y.text | safe}}</p>
+         <div class="d-flex justify-content-between">
+          <p class="card-text">
+            <span class="text-muted"> Tarih : </span> {{y.date}}
+          </p>
+
+          {% if y.user == request.user %}
+          <form method="POST" action="{% url "sil" %}">
+
+            {% csrf_token %}
+            <input type="text" value="{{y.id}}" id="" hidden name="silValue">
+            <input type="submit" value="Sil" class="btn btn-danger" />
+          </form>
+          {% endif %}
+         </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}
